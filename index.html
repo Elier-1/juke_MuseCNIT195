@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free Web tutorials">
+    <meta name="keywords" content="HTML, CSS, JavaScript, JukeMuse">
+    <meta name="author" content="Miguel Valtierra">
+    <link rel="stylesheet" href="index.css">
+    <script src="https://kit.fontawesome.com/c4254e24a8.js" crossorigin="anonymous"></script>
+    <title>JukeMusePlayer</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- buttons -->
+        <div class="music-player">
+            <nav>
+                <div class="circle">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </div>
+                <div class="circle">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </nav>
+
+            <img src="images/010101-min.jpeg" alt="avatar" class="song-img">
+            <h1>Desperado Mexicano</h1>
+            <p>Miguel Valtierra ft Eminem</p>
+
+            <!-- <audio controls id="song"> -->
+            <audio id="song">
+                <source src="songs/2 Minute Timer with Music [ELECTRIC] ⚡.mp3" type="audio/mpeg">
+            </audio>
+
+            <input type="range" value="0" id="progress">
+
+            <div class="controls">
+                <div><i class="fa-solid fa-backward"></i></div>
+                <div onclick="playPause()"><i class="fa-solid fa-play" id="iconCtrl"></i></div>
+                <div><i class="fa-solid fa-forward"></i></div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        let progress = document.getElementById("progress");
+        let song = document.getElementById("song");
+        let iconCtrl = document.getElementById("iconCtrl");
+
+        song.onloadedmetadata = function () {
+            progress.max = song.duration;
+            progress.value = song.currentTime;
+        }
+
+
+        // check icons is playing or pause
+        function playPause() {
+            if (iconCtrl.classList.contains("fa-pause")) {
+                song.pause();
+                iconCtrl.classList.remove("fa-pause");
+                iconCtrl.classList.add("fa-play");
+            }
+            else {
+                song.play();
+                iconCtrl.classList.add("fa-pause");
+                iconCtrl.classList.remove("fa-play");
+
+            }
+        }
+
+        if (song.play()) {
+            setInterval(() => {
+                progress.value = song.currentTime;
+            }, 500)
+        }
+
+        progress.onchange = function () {
+            song.play();
+            song.currentTime = progress.value;
+            iconCtrl.classList.add("fa-pause");
+            iconCtrl.classList.remove("fa-play");
+        }
+
+    </script>
+
+</body>
+
+</html>
